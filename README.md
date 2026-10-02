@@ -1,3 +1,4 @@
+#Nhóm 8
 # Sử dụng SymPy để giải quyết các bài toán về ma trận 🧮🐍
 
 Dự án này ứng dụng thư viện **SymPy** trong ngôn ngữ lập trình Python để mô phỏng, tính toán và giải quyết các bài toán cơ bản đến nâng cao trong Đại số tuyến tính, cụ thể là lý thuyết ma trận và hệ phương trình tuyến tính. Dự án giúp tự động hóa quá trình tính toán, hiển thị kết quả chính xác (dưới dạng phân số/ký hiệu toán học) và hỗ trợ kiểm chứng kết quả tính toán thủ công.
