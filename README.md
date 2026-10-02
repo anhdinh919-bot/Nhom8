@@ -1,8 +1,6 @@
-# Nhom8
-Sử dụng Sympy để giải quyết các bài toán về ma trận
 # Sử dụng SymPy để giải quyết các bài toán về ma trận 🧮🐍
 
-Dự án này ứng dụng thư viện **SymPy** trong ngôn ngữ lập trình Python để mô phỏng, tính toán và giải quyết các bài toán cơ bản đến nâng cao trong Đại số tuyến tính, cụ thể là lý thuyết ma trận và hệ phương trình tuyến tính. Dự án giúp tự động hóa quá trình tính toán, hiển thị kết quả chính xác (dưới dạng phân số/ký hiệu toán học) và hỗ trợ kiểm chứng kết quả làm tay.
+Dự án này ứng dụng thư viện **SymPy** trong ngôn ngữ lập trình Python để mô phỏng, tính toán và giải quyết các bài toán cơ bản đến nâng cao trong Đại số tuyến tính, cụ thể là lý thuyết ma trận và hệ phương trình tuyến tính. Dự án giúp tự động hóa quá trình tính toán, hiển thị kết quả chính xác (dưới dạng phân số/ký hiệu toán học) và hỗ trợ kiểm chứng kết quả tính toán thủ công.
 
 ---
 
@@ -20,7 +18,7 @@ Dự án này ứng dụng thư viện **SymPy** trong ngôn ngữ lập trình 
 
 ---
 
-## ✨ Các chức năng chính (Nội dung bài toán)
+## ✨ Các bài toán được giải quyết
 
 Dự án sử dụng Python và SymPy để triển khai các bài toán sau:
 - **Khởi tạo và truy xuất ma trận:** Khai báo ma trận, tạo ma trận không, ma trận đơn vị.
@@ -35,4 +33,13 @@ Dự án sử dụng Python và SymPy để triển khai các bài toán sau:
 - **Hệ phương trình tuyến tính:** 
   - Áp dụng định lý Rouché-Capelli để biện luận số nghiệm.
   - Giải hệ phương trình bằng phương pháp Gauss-Jordan.
-  - Giải hệ phương trình tổng quát (nghiệm duy nhất, vô số nghiệm, vô nghiệm) bằng `linsolve`.
+  - Giải hệ phương trình tổng quát (nghiệm duy nhất, vô số nghiệm, vô nghiệm) bằng hàm `linsolve`.
+
+---
+
+## 🚀 Hướng dẫn xem và chạy dự án
+
+1. **Tải mã nguồn về máy:**
+   Bạn có thể tải trực tiếp file code hoặc clone repository này về máy tính bằng lệnh:
+   ```bash
+   git clone [https://github.com/anhdinh919-bot/Nhom8.git](https://github.com/anhdinh919-bot/Nhom8.git)
