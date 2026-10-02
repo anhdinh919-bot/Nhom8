@@ -1,0 +1,1884 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage[a4paper, left=3cm, right=2cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage[table]{xcolor} 
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+% ================= CÀI ĐẶT MÀU SẮC =================
+\definecolor{headingcolor}{RGB}{0, 75, 135}      % Màu xanh dương đậm cho tiêu đề
+\definecolor{theoryframe}{RGB}{41, 128, 185}     % Màu viền khung lý thuyết
+\definecolor{theorybg}{RGB}{244, 249, 253}       % Màu nền khung lý thuyết
+\definecolor{sympybg}{RGB}{240, 248, 255}        % Màu nền xanh nhạt cho khung code Sympy
+\definecolor{codeblue}{rgb}{0.13, 0.13, 1}       % Màu cho từ khóa lệnh
+\definecolor{codegreen}{rgb}{0, 0.6, 0}          % Màu cho comment
+\definecolor{codepurple}{rgb}{0.58, 0, 0.82}     % Màu cho chuỗi (string)
+\definecolor{tableheader}{rgb}{0.85, 0.9, 0.95}  % Màu nền tiêu đề bảng
+
+% ================= ĐỊNH DẠNG TIÊU ĐỀ =================
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries\color{headingcolor}}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titleformat{\section}{\color{headingcolor}\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\color{headingcolor}\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\color{headingcolor}\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% ================= CÀI ĐẶT KHUNG LÝ THUYẾT =================
+\newtcolorbox{theorybox}{
+    colback=theorybg,
+    colframe=theoryframe,
+    arc=5pt,
+    boxrule=1pt,
+    left=10pt, right=10pt, top=10pt, bottom=10pt,
+    fonttitle=\bfseries
+}
+
+% ================= CÀI ĐẶT KHUNG CODE SYM PY =================
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{codeblue}\bfseries,
+    stringstyle=\color{codepurple},
+    commentstyle=\color{codegreen}\itshape,
+    frame=single, 
+    rulecolor=\color{gray!80}, 
+    backgroundcolor=\color{sympybg}, 
+    aboveskip=0.2cm,
+    belowskip=0.5cm,
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=4
+}
+
+\newtheorem{definition}{Định nghĩa}[chapter]
+\newtheorem{theorem}{Định lý}[chapter]
+\newtheorem{remark}{Nhận xét}[chapter]
+\newtheorem{example}{Ví dụ}[chapter]
+% ================= TRANG BÌA =================
+\begin{titlepage}
+    \begin{center}
+        \vspace*{0.5cm}
+        {\large \textbf{BỘ GIÁO DỤC VÀ ĐÀO TẠO}}\\[0.2cm]
+        {\large \textbf{TRƯỜNG ĐẠI HỌC SƯ PHẠM HUẾ}}\\[0.3cm]
+        \rule{0.5\textwidth}{1.5pt}\\[1cm] % Đường kẻ trang trí
+        
+        {\Large \textbf{BÁO CÁO DỰ ÁN}}\\[0.5cm]
+        {\Large \textbf{Môn: Tích hợp CNTT trong dạy học toán}}\\[2.5cm]
+        
+        % Hộp màu chứa tên đề tài (Dùng gói tcolorbox đã có sẵn)
+        \begin{tcolorbox}[colback=theorybg, colframe=headingcolor, boxrule=2pt, arc=10pt, width=0.95\textwidth, halign=center, top=1.2cm, bottom=1.2cm]
+            {\huge \textbf{\textcolor{headingcolor}{SỬ DỤNG SYMPY ĐỂ GIẢI QUYẾT}}}\\[0.5cm]
+            {\huge \textbf{\textcolor{headingcolor}{CÁC BÀI TOÁN VỀ MA TRẬN}}}
+        \end{tcolorbox}
+        
+        \vspace{1cm}
+        
+        % Thông tin Giảng viên và Sinh viên thực hiện
+        \begin{flushleft}
+            \hspace*{1cm} \textbf{\large Giảng viên hướng dẫn:} {\large Thầy Nguyễn Đăng Minh Phúc} \\[0.5cm]
+            \hspace*{2.5cm} \textbf{\large Lớp:} {\large Toán 4A} \\[0.5cm]
+            \hspace*{2.5cm} \textbf{\large Nhóm thực hiện:} {\large Nhóm 8} \\[0.3cm]
+            \hspace*{2.5cm} \textbf{\large Thành viên nhóm:}\\[0.2cm]
+            \hspace*{4cm} {\large 1. Đinh Thị Kim Anh}\\[0.2cm]
+            \hspace*{4cm} {\large 2. Phạm Thị Bích Ngân}\\[0.2cm]
+            \hspace*{4cm} {\large 3. Trần Yến Vi}\\[0.2cm]
+            \hspace*{4cm} {\large 4. Yn Lân}
+        \end{flushleft}
+        
+        \vfill
+        \rule{0.4\textwidth}{1pt}\\[0.3cm]
+        {\large \textbf{Huế, Năm 2026}}
+    \end{center}
+\end{titlepage}
+\begin{document}
+\chapter{Mở đầu}
+
+\section{Lý do chọn đề tài}
+
+Đại số tuyến tính nói chung và lý thuyết ma trận nói riêng là một trong những nền tảng toán học vô cùng quan trọng, được ứng dụng rộng rãi trong nhiều lĩnh vực khoa học kỹ thuật như trí tuệ nhân tạo, đồ họa máy tính, mật mã học, vật lý học và kinh tế học. Tuy nhiên, việc tính toán ma trận bằng phương pháp thủ công (như nhân các ma trận kích thước lớn, tìm ma trận nghịch đảo, hay biến đổi sơ cấp đưa về dạng bậc thang) thường đòi hỏi nhiều thời gian, công sức và rất dễ dẫn đến sai sót.
+
+Trong bối cảnh công nghệ thông tin phát triển mạnh mẽ, việc ứng dụng các ngôn ngữ lập trình vào quá trình học tập và nghiên cứu Toán học đã trở thành một xu hướng tất yếu. Ngôn ngữ lập trình Python, với cú pháp thân thiện và hệ sinh thái thư viện phong phú, đang đóng vai trò là một công cụ hỗ trợ đắc lực. Thay vì chỉ tiếp cận Toán học qua các định lý và phép tính trên giấy, việc kết hợp lập trình giúp người học và người nghiên cứu có thể kiểm chứng kết quả nhanh chóng, tự động hóa các bước tính toán lặp đi lặp lại và hiểu sâu hơn về bản chất thuật toán.
+
+Xuất phát từ nhu cầu thực tiễn đó, chúng tôi quyết định thực hiện dự án với đề tài \textbf{"Sử dụng SymPy để giải quyết các bài toán về ma trận"}. Đề tài này không chỉ giúp củng cố kiến thức nền tảng về đại số tuyến tính mà còn mang đến một góc nhìn hiện đại, hướng dẫn cách sử dụng công cụ tính toán ký hiệu (symbolic computation) để giải quyết các bài toán Toán học một cách chính xác và hiệu quả nhất.
+
+\section{Giới thiệu về dự án}
+
+\subsection{Mục tiêu của dự án}
+Dự án được xây dựng với các mục tiêu cốt lõi sau:
+\begin{itemize}[label=\textcolor{headingcolor}{\textbullet}]
+    \item \textbf{Hệ thống hóa kiến thức:} Ôn tập và trình bày lại một cách logic các nền tảng lý thuyết cơ bản về ma trận, hệ phương trình tuyến tính và các phép biến đổi liên quan.
+    \item \textbf{Ứng dụng công nghệ:} Hướng dẫn chi tiết cách sử dụng các hàm và phương thức có sẵn trong thư viện SymPy của Python để mô phỏng và giải quyết các bài toán ma trận tương ứng.
+    \item \textbf{Đối chiếu và xác minh:} So sánh quá trình tính toán thủ công với kết quả chạy bằng mã máy tính, qua đó làm nổi bật tính chính xác và ưu việt của việc ứng dụng lập trình vào Toán học.
+\end{itemize}
+
+\subsection{Đối tượng và phạm vi nghiên cứu}
+\begin{itemize}[label=\textcolor{headingcolor}{\textbullet}]
+    \item \textbf{Đối tượng nghiên cứu:} Các bài toán cơ bản về ma trận (cộng, trừ, nhân, chuyển vị), định thức, ma trận nghịch đảo, phép biến đổi sơ cấp trên hàng, hạng của ma trận và bài toán giải hệ phương trình tuyến tính.
+    \item \textbf{Phạm vi ứng dụng:} Dự án hướng tới những sinh viên, học sinh đang học môn Đại số tuyến tính, cũng như các giảng viên, giáo viên cần một công cụ để kiểm tra chéo đáp án hoặc tự động hóa việc tạo đề thi, bài tập.
+\end{itemize}
+
+\section{Giới thiệu về thư viện SymPy}
+
+\begin{theorybox}
+\textbf{SymPy} (Symbolic Python) là một thư viện nguồn mở của ngôn ngữ lập trình Python, được thiết kế chuyên biệt để thực hiện các phép tính toán học ký hiệu (symbolic mathematics). Khác với các thư viện tính toán số học (numerical computation) thông thường, SymPy giữ nguyên bản chất đại số của các biểu thức, cho phép tính toán với các hằng số chính xác, phân số và các biến ký hiệu mà không bị làm tròn thành số thập phân. Đặc biệt, thư viện này còn hỗ trợ xuất kết quả dưới dạng mã \LaTeX, giúp việc trình bày công thức vô cùng tiện lợi.
+\end{theorybox}
+
+\subsection{Cài đặt và sử dụng SymPy}
+Để bắt đầu sử dụng thư viện SymPy, môi trường máy tính cần được cài đặt sẵn ngôn ngữ Python. Sau đó, thư viện có thể được cài đặt dễ dàng thông qua công cụ quản lý gói \texttt{pip} bằng lệnh sau trên Terminal (hoặc Command Prompt):
+
+\begin{lstlisting}[language=bash, keywordstyle=\color{black}]
+pip install sympy
+\end{lstlisting}
+
+Khi thư viện đã được cài đặt, ta chỉ cần gọi nó vào chương trình Python để bắt đầu sử dụng:
+
+\begin{lstlisting}
+import sympy as sp
+\end{lstlisting}
+
+Kể từ đây, mọi sức mạnh tính toán đại số của SymPy đã sẵn sàng để được áp dụng vào việc giải quyết các bài toán ma trận được trình bày trong các chương tiếp theo của báo cáo.
+\chapter{Giới thiệu các lệnh SymPy được sử dụng}
+
+Trong chương này, chúng tôi tổng hợp và giới thiệu cú pháp cũng như chức năng của các lệnh trong thư viện \texttt{SymPy} đã được áp dụng để giải quyết các bài toán ma trận trong dự án. Việc nắm vững các lệnh này là cơ sở để hiểu rõ phần cài đặt thuật toán và mã nguồn ở các chương sau.
+
+\section{Khai báo thư viện và khởi tạo ma trận}
+
+\begin{itemize}[label=\textcolor{headingcolor}{\textbullet}]
+    \item \textbf{Khai báo thư viện:} Nhập thư viện SymPy vào môi trường làm việc và gán tên viết tắt là \texttt{sp} để tiện lợi khi gọi các hàm.
+    \begin{lstlisting}
+import sympy as sp
+    \end{lstlisting}
+
+    \item \textbf{Tạo ma trận thông thường:} Sử dụng đối tượng \texttt{sp.Matrix()} với đầu vào là một danh sách (list) chứa các hàng của ma trận.
+    \begin{lstlisting}
+A = sp.Matrix([
+    [1, 2], 
+    [3, 4]
+])
+    \end{lstlisting}
+
+    \item \textbf{Tạo ma trận đặc biệt:} \texttt{sp.zeros(m, n)} để tạo ma trận không kích thước $m \times n$, và \texttt{sp.eye(n)} để tạo ma trận đơn vị cấp $n$.
+    \begin{lstlisting}
+O = sp.zeros(2, 2)
+I = sp.eye(3)
+    \end{lstlisting}
+
+    \item \textbf{Các hàm bổ trợ toán học:} Khai báo số hữu tỉ (phân số) để hệ thống giữ nguyên độ chính xác tuyệt đối mà không bị làm tròn, đồng thời khai báo biến ký hiệu toán học đại số.
+    \begin{lstlisting}
+# Khai bao phan so 1/3
+frac = sp.Rational(1, 3)
+
+# Khai bao bien x, y, z
+x, y, z = sp.symbols('x y z')
+    \end{lstlisting}
+\end{itemize}
+
+\section{Các phép toán ma trận cơ bản}
+
+Các phép toán đại số trên ma trận được SymPy hỗ trợ rất trực quan thông qua các toán tử cơ bản và phương thức tích hợp sẵn của đối tượng \texttt{Matrix}.
+
+\begin{itemize}[label=\textcolor{headingcolor}{\textbullet}]
+    \item \textbf{Cộng, trừ, nhân:} Sử dụng trực tiếp các ký hiệu toán tử lần lượt là \texttt{+}, \texttt{-}, \texttt{*}.
+    \begin{lstlisting}
+C = A + B
+D = A - B
+E = 4 * A     # Nhan ma tran voi so vo huong
+F = A * B     # Nhan hai ma tran
+    \end{lstlisting}
+
+    \item \textbf{Các đặc trưng của ma trận:} SymPy cung cấp các phương thức để tìm chuyển vị (\texttt{.T}), định thức (\texttt{.det()}), và ma trận nghịch đảo (\texttt{.inv()}).
+    \begin{lstlisting}
+A_T = A.T      # Ma tran chuyen vi
+d = A.det()    # Dinh thuc
+A_inv = A.inv() # Ma tran nghich dao
+    \end{lstlisting}
+\end{itemize}
+
+\section{Biến đổi sơ cấp và hạng của ma trận}
+
+\begin{itemize}[label=\textcolor{headingcolor}{\textbullet}]
+    \item \textbf{Tạo bản sao ma trận:} Các lệnh biến đổi sơ cấp thường làm thay đổi trực tiếp lên đối tượng. Do đó, dùng phương thức \texttt{.copy()} để tạo bản sao nếu muốn giữ lại ma trận gốc.
+    \begin{lstlisting}
+B = A.copy()
+    \end{lstlisting}
+
+    \item \textbf{Biến đổi sơ cấp trên hàng:} Dùng phương thức \texttt{row\_swap} để đổi chỗ và \texttt{row\_op} kết hợp với hàm \texttt{lambda} để thực hiện tính toán trên hàng. (Lưu ý: chỉ số hàng/cột bắt đầu từ $0$).
+    \begin{lstlisting}
+# Doi cho hang 1 va hang 3
+A.row_swap(0, 2)
+
+# Nhan hang 2 voi 2
+A.row_op(1, lambda val, j: 2 * val)
+
+# Cong (-2) lan hang 1 vao hang 2
+A.row_op(1, lambda val, j: val - 2 * A[0, j])
+    \end{lstlisting}
+
+    \item \textbf{Dạng bậc thang và hạng:} Chuyển ma trận về dạng bậc thang (\texttt{echelon\_form()}), bậc thang rút gọn RREF (\texttt{rref()}) và tính hạng của ma trận (\texttt{rank()}). Lệnh \texttt{rref()} trả về ma trận kết quả và vị trí các cột trụ.
+    \begin{lstlisting}
+E = A.echelon_form()
+R, pivot_cols = A.rref()
+r = A.rank()
+    \end{lstlisting}
+\end{itemize}
+
+\section{Giải hệ phương trình tuyến tính}
+
+SymPy cung cấp nhiều công cụ linh hoạt để xử lý bài toán hệ phương trình tuyến tính dưới dạng ma trận $AX = B$.
+
+\begin{itemize}[label=\textcolor{headingcolor}{\textbullet}]
+    \item \textbf{Tạo ma trận mở rộng:} Dùng phương thức \texttt{row\_join()} để ghép ma trận cột hệ số tự do $B$ vào bên phải ma trận hệ số $A$.
+    \begin{lstlisting}
+Ab = A.row_join(B)
+    \end{lstlisting}
+
+    \item \textbf{Phương pháp Gauss-Jordan:} Giải và trả về ngay ma trận nghiệm kèm theo các tham số (nếu có).
+    \begin{lstlisting}
+solution, params = A.gauss_jordan_solve(B)
+    \end{lstlisting}
+
+    \item \textbf{Giải hệ tổng quát linsolve():} Đây là hàm mạnh mẽ nhất để giải hệ tuyến tính, trả về dạng tập nghiệm. Hàm này hoạt động tốt cho cả trường hợp hệ vô nghiệm (trả về tập rỗng), nghiệm duy nhất hoặc vô số nghiệm.
+    \begin{lstlisting}
+sol_set = sp.linsolve((A, B))
+    \end{lstlisting}
+
+    \item \textbf{Kiểm tra nghiệm:} Dùng phương thức \texttt{.subs()} để thay thế (substitution) tập giá trị nghiệm tìm được ngược trở lại vào phương trình ban đầu nhằm kiểm tra tính đúng đắn.
+    \begin{lstlisting}
+# Thay the tap gia tri vao bieu thuc eq
+result = eq.subs({x: sp.Rational(1, 3), y: sp.Rational(10, 9)})
+    \end{lstlisting}
+\end{itemize}
+\chapter{Giải một số bài toán về ma trận bằng SymPy}
+
+Trong chương này, chúng tôi sử dụng thư viện \texttt{SymPy} trong ngôn ngữ lập trình Python để giải quyết một số bài toán cơ bản về ma trận. Các nội dung được tập trung nghiên cứu gồm: thực hiện các phép biến đổi sơ cấp trên ma trận, xác định hạng của ma trận và giải hệ phương trình tuyến tính.
+
+Việc sử dụng \texttt{SymPy} giúp thực hiện các phép tính ma trận một cách nhanh chóng, chính xác và hạn chế những sai sót có thể xảy ra khi tính toán bằng tay. Bên cạnh việc sử dụng các hàm có sẵn của thư viện, các ví dụ trong chương còn đối chiếu với phương pháp tính toán truyền thống nhằm làm rõ bản chất toán học của từng bài toán.
+
+Trước khi thực hiện các phép tính, cần khai báo thư viện \texttt{SymPy} bằng lệnh:
+
+\begin{lstlisting}
+import sympy as sp
+\end{lstlisting}
+
+Trong toàn bộ chương này, ký hiệu \texttt{sp} được sử dụng thay cho tên đầy đủ của thư viện \texttt{SymPy}.
+
+% =======================================================
+\section{Khai báo ma trận trong SymPy}
+% =======================================================
+
+Để tạo một ma trận trong \texttt{SymPy}, sử dụng đối tượng \texttt{Matrix}.
+
+Ví dụ, xét ma trận
+\[
+A=
+\begin{pmatrix}
+1&2&3\\
+4&5&6\\
+7&8&9
+\end{pmatrix}.
+\]
+
+Ta khai báo trong Python như sau:
+
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+])
+
+print(A)
+\end{lstlisting}
+
+Kết quả:
+
+\begin{lstlisting}
+Matrix([
+[1, 2, 3],
+[4, 5, 6],
+[7, 8, 9]])
+\end{lstlisting}
+
+Có thể truy cập phần tử ở hàng $i$, cột $j$ của ma trận bằng cú pháp:
+
+\begin{lstlisting}
+A[i, j]
+\end{lstlisting}
+
+Trong \texttt{Python}, chỉ số được bắt đầu từ $0$. Do đó, phần tử $a_{11}$ được gọi bằng:
+
+\begin{lstlisting}
+A[0, 0]
+\end{lstlisting}
+
+% =======================================================
+\section{Phép toán cơ bản trên ma trận}
+% =======================================================
+
+\subsection{Cộng trừ ma trận}
+\textbf{a. Nhắc lại lý thuyết}
+\begin{theorybox}
+Cho hai ma trận $A_{mn} = [a_{ij}]_{mn}$ và $B_{mn} = [b_{ij}]_{mn}$ có cùng kích thước $m \times n$.
+Khi đó, ma trận tổng (hoặc hiệu) $C_{mn} = A \pm B = [c_{ij}]_{mn}$ là một ma trận mới có cùng kích thước với $A$ và $B$. Trong đó:
+$$c_{ij} = a_{ij} \pm b_{ij}, \forall i = \overline{1,m}; j = \overline{1,n}.$$
+
+\begin{itemize}
+    \item $a_{ij} \rightarrow$ Phần tử nằm ở vị trí hàng $i$, cột $j$ của ma trận $A$.
+    \item $b_{ij} \rightarrow$ Phần tử nằm ở vị trí hàng $i$, cột $j$ của ma trận $B$.
+\end{itemize}
+\end{theorybox}
+
+\vspace{0.5cm}
+\noindent \textbf{b. Ví dụ} 
+
+\noindent \textbf{Tính:}
+\[ \begin{bmatrix} 1 & 4 & -2 \\ 3 & 0 & 5 \end{bmatrix} + \begin{bmatrix} -1 & 2 & 3 \\ 4 & -3 & 1 \end{bmatrix} \]
+\noindent \textbf{Trong Sympy:}
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 4, -2],
+    [3, 0, 5]
+])
+
+B = sp.Matrix([
+    [-1, 2, 3],
+    [4, -3, 1]
+])
+
+print(A + B)
+\end{lstlisting}
+\noindent \textbf{Kết quả:}
+\begin{lstlisting}
+Matrix([
+[0,  6, 1],
+[7, -3, 6]])
+\end{lstlisting}
+
+\vspace{0.3cm}
+\noindent \textbf{Tính:}
+\[ \begin{bmatrix} 5 & -1 \\ 2 & 7 \\ 0 & 4 \end{bmatrix} - \begin{bmatrix} 2 & 3 \\ -1 & 4 \\ 1 & 0 \end{bmatrix} \]
+\noindent \textbf{Trong Sympy:}
+\begin{lstlisting}
+A = sp.Matrix([
+    [5, -1],
+    [2, 7],
+    [0, 4]
+])
+
+B = sp.Matrix([
+    [2, 3],
+    [-1, 4],
+    [1, 0]
+])
+
+print(A - B)
+\end{lstlisting}
+\noindent \textbf{Kết quả:}
+\begin{lstlisting}
+Matrix([
+[ 3, -4],
+[ 3,  3],
+[-1,  4]])
+\end{lstlisting}
+
+\vspace{0.5cm}
+\subsection{Nhân ma trận với một vô hướng}
+\textbf{a. Nhắc lại lý thuyết}
+\begin{theorybox}
+Cho ma trận $A_{mn} = [a_{ij}]_{mn}$ và một số vô hướng $k$ (thường là một số thực hoặc số phức).
+Khi đó tích của số vô hướng $k$ với ma trận $A$, ký hiệu là $kA$, là một ma trận mới $B_{mn} = [c_{ij}]_{mn}$ có cùng kích thước với $A$.
+Trong đó:
+$$c_{ij} = k \cdot a_{ij}, \forall i = \overline{1,m}; j = \overline{1,n}.$$
+
+\begin{itemize}
+    \item $k \rightarrow$ Số vô hướng đem nhân.
+    \item $a_{ij} \rightarrow$ Phần tử nằm ở hàng $i$ và cột $j$ của ma trận gốc $A$.
+\end{itemize}
+\end{theorybox}
+
+\vspace{0.5cm}
+\noindent \textbf{b. Ví dụ} 
+
+\noindent \textbf{Tính:}
+\[ 4 \begin{bmatrix} 2 & -1 & 0 \\ 3 & 5 & -2 \end{bmatrix} \]
+\noindent \textbf{Trong Sympy:}
+\begin{lstlisting}
+A = sp.Matrix([
+    [2, -1, 0],
+    [3, 5, -2]
+])
+
+print(4 * A)
+\end{lstlisting}
+\noindent \textbf{Kết quả:}
+\begin{lstlisting}
+Matrix([
+[ 8, -4,  0],
+[12, 20, -8]])
+\end{lstlisting}
+
+\vspace{0.3cm}
+\noindent \textbf{Tính:}
+\[ -\frac{1}{3} \begin{bmatrix} -6 & 9 \\ 3 & 0 \\ -12 & 15 \end{bmatrix} \]
+\noindent \textbf{Trong Sympy:}
+\begin{lstlisting}
+A = sp.Matrix([
+    [-6, 9],
+    [3, 0],
+    [-12, 15]
+])
+
+# Dung sp.Rational de giu nguyen phan so thay vi so thap phan
+print(sp.Rational(-1, 3) * A)
+\end{lstlisting}
+\noindent \textbf{Kết quả:}
+\begin{lstlisting}
+Matrix([
+[ 2, -3],
+[-1,  0],
+[ 4, -5]])
+\end{lstlisting}
+
+\vspace{0.5cm}
+\subsection{Nhân hai ma trận}
+\textbf{a. Nhắc lại lý thuyết}
+\begin{theorybox}
+Cho hai ma trận $A_{mp}$ và $B_{pn}$. Khi đó ma trận $C_{mn} = A_{mp}B_{pn} = [c_{ij}]_{mn}$ gọi là tích của hai ma trận $A, B$. Trong đó: 
+$$ c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \dots + a_{ip}b_{pj}, \forall i = \overline{1,m}; j = \overline{1,n}. $$
+
+\begin{itemize}
+    \item $a_{i1}, a_{i2}, \dots, a_{ip} \rightarrow$ Hàng thứ $i$ của ma trận $A$.
+    \item $b_{1j}, b_{2j}, \dots, b_{pj} \rightarrow$ Cột thứ $j$ của ma trận $B$.
+\end{itemize}
+Như vậy $c_{ij} =$ hàng thứ $i$ của ma trận $A$ nhân tương ứng với cột thứ $j$ của ma trận $B$ rồi cộng lại.
+\end{theorybox}
+
+\vspace{0.5cm}
+\noindent \textbf{b. Ví dụ} 
+
+\noindent \textbf{Tính tích của hai ma trận vuông cấp 2:}
+\[ \begin{bmatrix} 2 & -1 \\ 3 & 4 \end{bmatrix} \begin{bmatrix} 1 & 5 \\ -2 & 0 \end{bmatrix} \]
+\noindent \textbf{Trong Sympy:}
+\begin{lstlisting}
+A = sp.Matrix([
+    [2, -1],
+    [3, 4]
+])
+
+B = sp.Matrix([
+    [1, 5],
+    [-2, 0]
+])
+
+print(A * B)
+\end{lstlisting}
+\noindent \textbf{Kết quả:}
+\begin{lstlisting}
+Matrix([
+[ 4, 10],
+[-5, 15]])
+\end{lstlisting}
+
+\vspace{0.3cm}
+\noindent \textbf{Tính tích của ma trận cỡ $2 \times 3$ và ma trận cỡ $3 \times 2$:}
+\[ \begin{bmatrix} 1 & -2 & 3 \\ 0 & 4 & -1 \end{bmatrix} \begin{bmatrix} 2 & -1 \\ 1 & 3 \\ -2 & 0 \end{bmatrix} \]
+\noindent \textbf{Trong Sympy:}
+\begin{lstlisting}
+A = sp.Matrix([
+    [1, -2, 3],
+    [0, 4, -1]
+])
+
+B = sp.Matrix([
+    [2, -1],
+    [1, 3],
+    [-2, 0]
+])
+
+print(A * B)
+\end{lstlisting}
+\noindent \textbf{Kết quả:}
+\begin{lstlisting}
+Matrix([
+[-6, -7],
+[ 6, 12]])
+\end{lstlisting}
+
+\vspace{0.5cm}
+\subsection{Phép chuyển vị ($A^T$)}
+\textbf{a. Nhắc lại lý thuyết}
+\begin{theorybox}
+Cho ma trận $A_{mn} = [a_{ij}]_{mn}$.
+Khi đó ma trận $A^T_{nm} = [c_{ij}]_{nm}$ gọi là ma trận chuyển vị của ma trận $A$. Trong đó:
+$$ c_{ij} = a_{ji}, \forall i = \overline{1,n}; j = \overline{1,m}. $$
+
+\begin{itemize}
+    \item $a_{j1}, a_{j2}, \dots, a_{jn} \rightarrow$ Hàng thứ $j$ của ma trận $A$ sẽ trở thành cột thứ $j$ của ma trận $A^T$.
+    \item $a_{1i}, a_{2i}, \dots, a_{mi} \rightarrow$ Cột thứ $i$ của ma trận $A$ sẽ trở thành hàng thứ $i$ của ma trận $A^T$.
+\end{itemize}
+Như vậy $c_{ij} =$ phần tử nằm ở vị trí giao giữa hàng $j$ và cột $i$ của ma trận gốc $A$. Quá trình này thực chất là đổi lần lượt các hàng của ma trận $A$ thành các cột tương ứng để tạo ra ma trận $A^T$.
+\end{theorybox}
+
+\vspace{0.5cm}
+\noindent \textbf{b. Ví dụ} 
+
+\noindent \textbf{Tìm ma trận chuyển vị $A^T$ của ma trận $A$ sau:}
+\[ A = \begin{bmatrix} 3 & -1 & 5 \\ 0 & 2 & -4 \end{bmatrix} \]
+\noindent \textbf{Trong Sympy:}
+\begin{lstlisting}
+A = sp.Matrix([
+    [3, -1, 5],
+    [0, 2, -4]
+])
+
+print(A.T)
+\end{lstlisting}
+\noindent \textbf{Kết quả:}
+\begin{lstlisting}
+Matrix([
+[ 3,  0],
+[-1,  2],
+[ 5, -4]])
+\end{lstlisting}
+
+\vspace{0.3cm}
+\noindent \textbf{Tìm ma trận chuyển vị $B^T$ của ma trận $B$ sau:}
+\[ B = \begin{bmatrix} 1 & 0 \\ -3 & 7 \\ 2 & 5 \\ 4 & -1 \end{bmatrix} \]
+\noindent \textbf{Trong Sympy:}
+\begin{lstlisting}
+B = sp.Matrix([
+    [1, 0],
+    [-3, 7],
+    [2, 5],
+    [4, -1]
+])
+
+print(B.T)
+\end{lstlisting}
+\noindent \textbf{Kết quả:}
+\begin{lstlisting}
+Matrix([
+[1, -3, 2,  4],
+[0,  7, 5, -1]])
+\end{lstlisting}
+
+% =======================================================
+\section{Định thức và ma trận nghịch đảo}
+% =======================================================
+
+\subsection{Định thức}
+\textbf{a. Nhắc lại lý thuyết}
+\begin{theorybox}
+Cho ma trận vuông $A_n = [a_{ij}]_n$.
+Khi đó định thức của ma trận $A$, ký hiệu là $\det(A)$ hoặc $|A|$, là một số vô hướng gắn liền với ma trận đó. Trong đó, công thức tính định thức bằng cách khai triển theo hàng thứ $i$ bất kỳ ($i = \overline{1,n}$) là:
+$$ \det(A) = a_{i1}C_{i1} + a_{i2}C_{i2} + \dots + a_{in}C_{in} = \sum_{j=1}^{n} a_{ij}C_{ij}. $$
+
+\begin{itemize}
+    \item $a_{i1}, a_{i2}, \dots, a_{in} \rightarrow$ Các phần tử nằm trên hàng thứ $i$ của ma trận $A$.
+    \item $C_{ij} \rightarrow$ Phần bù đại số của phần tử $a_{ij}$, được tính bằng công thức $(-1)^{i+j}M_{ij}$.
+    \item $M_{ij} \rightarrow$ Định thức con cấp $n-1$, thu được bằng cách xóa đi hàng $i$ và cột $j$ của ma trận gốc $A$.
+\end{itemize}
+\end{theorybox}
+
+\vspace{0.5cm}
+\noindent \textbf{b. Ví dụ} 
+
+\noindent \textbf{Tính định thức của ma trận $A$ cấp $3 \times 3$ sau:}
+\[ A = \begin{bmatrix} 2 & -1 & 3 \\ 4 & 1 & 5 \\ -2 & 0 & 1 \end{bmatrix} \]
+\noindent \textbf{Trong Sympy:}
+\begin{lstlisting}
+A = sp.Matrix([
+    [2, -1, 3],
+    [4, 1, 5],
+    [-2, 0, 1]
+])
+
+print(A.det())
+\end{lstlisting}
+\noindent \textbf{Kết quả:}
+\begin{lstlisting}
+22
+\end{lstlisting}
+
+\vspace{0.3cm}
+\noindent \textbf{Tính định thức của ma trận $A$ cấp $4 \times 4$ sau:}
+\[ A = \begin{bmatrix} 2 & 1 & 0 & -1 \\ -1 & 3 & 2 & 0 \\ 0 & 4 & -2 & 1 \\ 3 & 0 & 1 & -3 \end{bmatrix} \]
+\noindent \textbf{Trong Sympy:}
+\begin{lstlisting}
+A = sp.Matrix([
+    [2, 1, 0, -1],
+    [-1, 3, 2, 0],
+    [0, 4, -2, 1],
+    [3, 0, 1, -3]
+])
+
+print(A.det())
+\end{lstlisting}
+\noindent \textbf{Kết quả:}
+\begin{lstlisting}
+123
+\end{lstlisting}
+
+\vspace{0.5cm}
+\subsection{Ma trận nghịch đảo}
+\textbf{a. Nhắc lại lý thuyết}
+\begin{theorybox}
+Cho ma trận vuông $A_n = [a_{ij}]_n$ thỏa mãn điều kiện định thức $\det(A) \neq 0$.
+Khi đó ma trận $A^{-1}_n = [c_{ij}]_n$ thỏa mãn $A \cdot A^{-1} = A^{-1} \cdot A = I_n$ gọi là ma trận nghịch đảo của ma trận $A$. Trong đó, công thức tính phần tử là:
+$$ c_{ij} = \frac{1}{\det(A)} C_{ji}, \forall i = \overline{1,n}; j = \overline{1,n}. $$
+
+\begin{itemize}
+    \item $\det(A) \rightarrow$ Định thức của ma trận gốc $A$.
+    \item $C_{ji} \rightarrow$ Phần bù đại số của phần tử $a_{ji}$ trong ma trận $A$ (được tính bằng $(-1)^{j+i}M_{ji}$, với $M_{ji}$ là định thức con khi bỏ đi hàng $j$ và cột $i$).
+    \item $I_n \rightarrow$ Ma trận đơn vị cấp $n$ (các phần tử trên đường chéo chính bằng 1, còn lại bằng 0).
+\end{itemize}
+\end{theorybox}
+
+\vspace{0.5cm}
+\noindent \textbf{b. Ví dụ} 
+
+\noindent \textbf{Tìm ma trận nghịch đảo của ma trận $A$ cấp $2 \times 2$ sau:}
+\[ A = \begin{bmatrix} 2 & 5 \\ 1 & 3 \end{bmatrix} \]
+\noindent \textbf{Trong Sympy:}
+\begin{lstlisting}
+A = sp.Matrix([
+    [2, 5],
+    [1, 3]
+])
+
+print(A.inv())
+\end{lstlisting}
+\noindent \textbf{Kết quả:}
+\begin{lstlisting}
+Matrix([
+[ 3, -5],
+[-1,  2]])
+\end{lstlisting}
+
+\vspace{0.3cm}
+\noindent \textbf{Tìm ma trận nghịch đảo của ma trận $B$ cấp $3 \times 3$ sau:}
+\[ B = \begin{bmatrix} 1 & 2 & 0 \\ 0 & 1 & 1 \\ 1 & 0 & -1 \end{bmatrix} \]
+\noindent \textbf{Trong Sympy:}
+\begin{lstlisting}
+B = sp.Matrix([
+    [1, 2, 0],
+    [0, 1, 1],
+    [1, 0, -1]
+])
+
+print(B.inv())
+\end{lstlisting}
+\noindent \textbf{Kết quả:}
+\begin{lstlisting}
+Matrix([
+[-1,  2,  2],
+[ 1, -1, -1],
+[-1,  2,  1]])
+\end{lstlisting}
+
+
+% =======================================================
+\section{Các phép biến đổi sơ cấp trên ma trận}
+% =======================================================
+
+\subsection{Nhắc lại lý thuyết}
+
+\begin{theorybox}
+Các phép biến đổi sơ cấp trên hàng của ma trận gồm ba loại cơ bản:
+
+\begin{enumerate}[label=\arabic*.]
+    \item Đổi chỗ hai hàng của ma trận.
+    \item Nhân một hàng với một số khác không.
+    \item Cộng vào một hàng một bội của một hàng khác.
+\end{enumerate}
+
+Cụ thể, với ma trận
+\[
+A=
+\begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1n}\\
+a_{21} & a_{22} & \cdots & a_{2n}\\
+\vdots & \vdots & \ddots & \vdots\\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{pmatrix},
+\]
+ta có các phép biến đổi sơ cấp sau.
+\end{theorybox}
+
+\subsubsection{Đổi chỗ hai hàng}
+
+Đổi chỗ hai hàng $R_i$ và $R_j$ được ký hiệu bởi
+\[
+R_i \leftrightarrow R_j.
+\]
+
+Ví dụ:
+\[
+\begin{pmatrix}
+1&2\\
+3&4
+\end{pmatrix}
+\longrightarrow
+\begin{pmatrix}
+3&4\\
+1&2
+\end{pmatrix}.
+\]
+
+\subsubsection{Nhân một hàng với một số khác không}
+
+Với $\lambda\neq 0$, phép biến đổi
+\[
+R_i\longrightarrow \lambda R_i
+\]
+là một phép biến đổi sơ cấp.
+
+Ví dụ:
+\[
+\begin{pmatrix}
+1&2\\
+3&4
+\end{pmatrix}
+\longrightarrow
+\begin{pmatrix}
+1&2\\
+6&8
+\end{pmatrix}
+\]
+khi thực hiện $R_2\rightarrow 2R_2$.
+
+\subsubsection{Cộng một bội của hàng này vào hàng khác}
+
+Phép biến đổi
+\[
+R_i\longrightarrow R_i+\lambda R_j, \qquad i\neq j
+\]
+cũng là một phép biến đổi sơ cấp.
+
+Ví dụ:
+\[
+\begin{pmatrix}
+1&2\\
+3&4
+\end{pmatrix}
+\longrightarrow
+\begin{pmatrix}
+1&2\\
+5&8
+\end{pmatrix}
+\]
+khi thực hiện
+\[
+R_2\longrightarrow R_2+2R_1.
+\]
+
+Các phép biến đổi sơ cấp có vai trò quan trọng trong việc đưa ma trận về dạng bậc thang hoặc dạng bậc thang rút gọn. Đồng thời, các phép biến đổi sơ cấp trên hàng không làm thay đổi hạng của ma trận.
+
+\subsection{Đổi chỗ hai hàng}
+
+Trong \texttt{SymPy}, phương thức
+\begin{lstlisting}
+row_swap(i, j)
+\end{lstlisting}
+được sử dụng để đổi chỗ hàng $i$ và hàng $j$.
+
+Xét ma trận
+\[
+A=
+\begin{pmatrix}
+1&2&3\\
+4&5&6\\
+7&8&9
+\end{pmatrix}.
+\]
+
+Thực hiện đổi chỗ hàng thứ nhất và hàng thứ ba:
+
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+])
+
+A.row_swap(0, 2)
+
+print(A)
+\end{lstlisting}
+
+Kết quả thu được:
+\begin{lstlisting}
+Matrix([
+[7, 8, 9],
+[4, 5, 6],
+[1, 2, 3]])
+\end{lstlisting}
+
+Như vậy, lệnh
+\begin{lstlisting}
+A.row_swap(0, 2)
+\end{lstlisting}
+tương ứng với phép biến đổi toán học
+\[
+R_1\leftrightarrow R_3.
+\]
+
+\subsection{Nhân một hàng với một số khác không}
+
+Để nhân một hàng với một số, có thể sử dụng phương thức \texttt{row\_op()}.
+
+Xét ma trận
+\[
+A=
+\begin{pmatrix}
+1&2&3\\
+4&5&6\\
+7&8&9
+\end{pmatrix}.
+\]
+
+Thực hiện phép biến đổi
+\[
+R_2\longrightarrow 2R_2.
+\]
+
+Trong Python:
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+])
+
+A.row_op(1, lambda value, j: 2*value)
+
+print(A)
+\end{lstlisting}
+
+Kết quả:
+\begin{lstlisting}
+Matrix([
+[1,  2,  3],
+[8, 10, 12],
+[7,  8,  9]])
+\end{lstlisting}
+Ở đây, số $1$ trong \texttt{row\_op(1,...)} biểu thị hàng thứ hai vì Python đánh số từ $0$.
+
+\subsection{Cộng một bội của hàng vào hàng khác}
+
+Xét phép biến đổi
+\[
+R_2\longrightarrow R_2-2R_1.
+\]
+
+Ta có thể thực hiện bằng:
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+])
+
+A.row_op(1, lambda value, j: value - 2*A[0, j])
+
+print(A)
+\end{lstlisting}
+
+Kết quả là
+\begin{lstlisting}
+Matrix([
+[1, 2, 3],
+[2, 1, 0],
+[7, 8, 9]])
+\end{lstlisting}
+
+Do đó, \texttt{row\_op()} cho phép mô phỏng trực tiếp các phép biến đổi sơ cấp thường được sử dụng trong phương pháp Gauss.
+
+\subsection{Đưa ma trận về dạng bậc thang}
+
+Một trong những ứng dụng quan trọng của phép biến đổi sơ cấp là đưa ma trận về dạng bậc thang.
+
+Trong \texttt{SymPy}, có thể sử dụng phương thức:
+\begin{lstlisting}
+echelon_form()
+\end{lstlisting}
+
+Ví dụ:
+\[
+A=
+\begin{pmatrix}
+1&2&3\\
+2&4&6\\
+1&1&2
+\end{pmatrix}.
+\]
+
+Ta thực hiện:
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 2, 3],
+    [2, 4, 6],
+    [1, 1, 2]
+])
+
+E = A.echelon_form()
+
+print(E)
+\end{lstlisting}
+
+Kết quả có dạng
+\[
+\begin{pmatrix}
+1&2&3\\
+0&-1&-1\\
+0&0&0
+\end{pmatrix}.
+\]
+
+Ma trận trên là ma trận dạng bậc thang.
+
+\subsection{Đưa ma trận về dạng bậc thang rút gọn}
+Ngoài dạng bậc thang, \texttt{SymPy} còn cho phép đưa ma trận về dạng bậc thang rút gọn bằng phương thức \texttt{rref()}.
+
+Cú pháp:
+\begin{lstlisting}
+R, pivot_columns = A.rref()
+\end{lstlisting}
+
+Trong đó:
+\begin{itemize}
+    \item \texttt{R} là ma trận dạng bậc thang rút gọn;
+    \item \texttt{pivot\_columns} là các cột chứa phần tử trụ.
+\end{itemize}
+
+Ví dụ:
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 2, 3],
+    [2, 4, 6],
+    [1, 1, 2]
+])
+
+R, pivot_columns = A.rref()
+
+print(R)
+print(pivot_columns)
+\end{lstlisting}
+
+Kết quả:
+\[
+R=
+\begin{pmatrix}
+1&0&1\\
+0&1&1\\
+0&0&0
+\end{pmatrix}.
+\]
+
+Các cột trụ được trả về dưới dạng:
+\begin{lstlisting}
+(0, 1)
+\end{lstlisting}
+
+Do đó, ma trận có hai cột trụ.
+
+\subsection{Nhận xét về các phép biến đổi sơ cấp}
+
+Các phép biến đổi sơ cấp là công cụ quan trọng trong việc biến đổi ma trận về những dạng thuận tiện cho việc tính toán. Trong đó, việc đưa ma trận về dạng bậc thang hoặc dạng bậc thang rút gọn giúp xác định hạng ma trận và giải hệ phương trình tuyến tính.
+
+Khi sử dụng \texttt{SymPy}, người sử dụng không nhất thiết phải thực hiện thủ công từng phép biến đổi. Tuy nhiên, việc hiểu các phép biến đổi này vẫn cần thiết để giải thích ý nghĩa toán học của kết quả do chương trình đưa ra.
+
+% =======================================================
+\section{Hạng của ma trận}
+% =======================================================
+
+\subsection{Khái niệm hạng của ma trận}
+\begin{theorybox}
+Hạng của ma trận là số chiều của không gian hàng của ma trận, tương đương với số chiều của không gian cột.
+
+Ký hiệu hạng của ma trận $A$ là
+\[
+\operatorname{rank}(A).
+\]
+
+Nếu đưa ma trận $A$ về dạng bậc thang bằng các phép biến đổi sơ cấp trên hàng thì hạng của $A$ bằng số hàng khác không trong ma trận dạng bậc thang.
+
+Ngoài ra, hạng của ma trận cũng bằng số phần tử trụ khi đưa ma trận về dạng bậc thang rút gọn.
+\end{theorybox}
+
+\subsection{Tính hạng ma trận bằng SymPy}
+
+Trong \texttt{SymPy}, phương thức
+\begin{lstlisting}
+rank()
+\end{lstlisting}
+được sử dụng để xác định hạng của ma trận.
+
+Ví dụ:
+\[
+A=
+\begin{pmatrix}
+1&2&3\\
+2&4&6\\
+1&1&2
+\end{pmatrix}.
+\]
+
+Ta thực hiện:
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 2, 3],
+    [2, 4, 6],
+    [1, 1, 2]
+])
+
+r = A.rank()
+
+print(r)
+\end{lstlisting}
+
+Kết quả:
+\begin{lstlisting}
+2
+\end{lstlisting}
+
+Vậy
+\[
+\operatorname{rank}(A)=2.
+\]
+
+\subsection{Xác định hạng thông qua dạng bậc thang rút gọn}
+Ta cũng có thể xác định hạng của ma trận thông qua các cột trụ.
+
+\begin{lstlisting}
+R, pivot_columns = A.rref()
+
+print("Ma tran RREF:")
+print(R)
+
+print("Cac cot tru:")
+print(pivot_columns)
+
+print("Hang cua ma tran:")
+print(len(pivot_columns))
+\end{lstlisting}
+
+Do số cột trụ bằng $2$ nên
+\[
+\operatorname{rank}(A)=2.
+\]
+
+Cách làm này cho thấy mối liên hệ giữa dạng bậc thang rút gọn và hạng của ma trận.
+
+\subsection{Một số trường hợp đặc biệt}
+
+\subsubsection{Ma trận không}
+
+Với ma trận không
+\[
+O=
+\begin{pmatrix}
+0&0\\
+0&0
+\end{pmatrix},
+\]
+ta có
+\[
+\operatorname{rank}(O)=0.
+\]
+
+Trong \texttt{SymPy}:
+\begin{lstlisting}
+O = sp.zeros(2, 2)
+
+print(O.rank())
+\end{lstlisting}
+
+Kết quả:
+\begin{lstlisting}
+0
+\end{lstlisting}
+
+\subsubsection{Ma trận đơn vị}
+
+Xét ma trận đơn vị cấp $3$:
+\[
+I_3=
+\begin{pmatrix}
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{pmatrix}.
+\]
+
+Ta có
+\[
+\operatorname{rank}(I_3)=3.
+\]
+
+Trong \texttt{SymPy}:
+\begin{lstlisting}
+I = sp.eye(3)
+
+print(I.rank())
+\end{lstlisting}
+
+Kết quả:
+\begin{lstlisting}
+3
+\end{lstlisting}
+
+\subsection{Ý nghĩa của hạng ma trận}
+
+Hạng của ma trận cho biết số lượng hàng hoặc cột độc lập tuyến tính tối đa của ma trận.
+
+Chẳng hạn, với
+\[
+A=
+\begin{pmatrix}
+1&2&3\\
+2&4&6\\
+3&6&9
+\end{pmatrix},
+\]
+ta nhận thấy
+\[
+R_2=2R_1,\qquad R_3=3R_1.
+\]
+
+Do đó chỉ có một hàng độc lập tuyến tính, suy ra
+\[
+\operatorname{rank}(A)=1.
+\]
+
+Trong \texttt{SymPy}:
+\begin{lstlisting}
+A = sp.Matrix([
+    [1, 2, 3],
+    [2, 4, 6],
+    [3, 6, 9]
+])
+
+print(A.rank())
+\end{lstlisting}
+
+Kết quả:
+\begin{lstlisting}
+1
+\end{lstlisting}
+
+Như vậy, việc tính hạng bằng \texttt{SymPy} cho phép kiểm tra nhanh kết quả thu được từ quá trình biến đổi sơ cấp.
+
+% =======================================================
+\section{Giải hệ phương trình tuyến tính bằng SymPy}
+% =======================================================
+
+\subsection{Cơ sở lý thuyết}
+
+\begin{theorybox}
+Xét hệ phương trình tuyến tính $n$ ẩn:
+\[
+\begin{cases}
+a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n=b_1,\\
+a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n=b_2,\\
+\vdots\\
+a_{m1}x_1+a_{m2}x_2+\cdots+a_{mn}x_n=b_m.
+\end{cases}
+\]
+
+Hệ phương trình có thể được viết dưới dạng ma trận:
+\[
+AX=B,
+\]
+trong đó
+\[
+A=
+\begin{pmatrix}
+a_{11}&a_{12}&\cdots&a_{1n}\\
+a_{21}&a_{22}&\cdots&a_{2n}\\
+\vdots&\vdots&\ddots&\vdots\\
+a_{m1}&a_{m2}&\cdots&a_{mn}
+\end{pmatrix},
+\]
+\[
+X=
+\begin{pmatrix}
+x_1\\
+x_2\\
+\vdots\\
+x_n
+\end{pmatrix},
+\qquad
+B=
+\begin{pmatrix}
+b_1\\
+b_2\\
+\vdots\\
+b_m
+\end{pmatrix}.
+\]
+
+Ma trận mở rộng của hệ là
+\[
+\overline{A}=(A\mid B).
+\]
+\end{theorybox}
+
+\subsection{Định lý Rouché--Capelli}
+
+\begin{theorybox}
+\begin{theorem}[Rouché--Capelli]
+Hệ phương trình tuyến tính
+\[
+AX=B
+\]
+có nghiệm khi và chỉ khi
+\[
+\operatorname{rank}(A)
+=
+\operatorname{rank}(\overline{A}).
+\]
+\end{theorem}
+
+Nếu hệ có nghiệm, ta có ba trường hợp:
+\begin{itemize}
+    \item Nếu
+    \[
+    \operatorname{rank}(A)
+    =
+    \operatorname{rank}(\overline{A})
+    =n,
+    \]
+    thì hệ có nghiệm duy nhất.
+
+    \item Nếu
+    \[
+    \operatorname{rank}(A)
+    =
+    \operatorname{rank}(\overline{A})
+    <n,
+    \]
+    thì hệ có vô số nghiệm.
+
+    \item Nếu
+    \[
+    \operatorname{rank}(A)
+    <
+    \operatorname{rank}(\overline{A}),
+    \]
+    thì hệ vô nghiệm.
+\end{itemize}
+\end{theorybox}
+
+Định lý này có thể được kiểm tra trực tiếp bằng \texttt{SymPy} thông qua phương thức \texttt{rank()}.
+
+\subsection{Khai báo hệ phương trình trong SymPy}
+
+Xét hệ phương trình:
+\[
+\begin{cases}
+x+2y+z=4,\\
+2x-y+z=1,\\
+x+y-z=0.
+\end{cases}
+\]
+
+Ma trận hệ số là
+\[
+A=
+\begin{pmatrix}
+1&2&1\\
+2&-1&1\\
+1&1&-1
+\end{pmatrix}
+\]
+và ma trận cột hệ số tự do là
+\[
+B=
+\begin{pmatrix}
+4\\
+1\\
+0
+\end{pmatrix}.
+\]
+
+Trong \texttt{SymPy}:
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 2, 1],
+    [2, -1, 1],
+    [1, 1, -1]
+])
+
+B = sp.Matrix([
+    4,
+    1,
+    0
+])
+\end{lstlisting}
+
+\subsection{Giải hệ bằng phương pháp Gauss--Jordan}
+
+Một cách trực tiếp để giải hệ là đưa ma trận mở rộng về dạng bậc thang rút gọn.
+
+Ma trận mở rộng được tạo bởi:
+\begin{lstlisting}
+Ab = A.row_join(B)
+\end{lstlisting}
+
+Sau đó sử dụng:
+\begin{lstlisting}
+R, pivot_columns = Ab.rref()
+\end{lstlisting}
+
+Toàn bộ chương trình:
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 2, 1],
+    [2, -1, 1],
+    [1, 1, -1]
+])
+
+B = sp.Matrix([
+    4,
+    1,
+    0
+])
+
+Ab = A.row_join(B)
+
+R, pivot_columns = Ab.rref()
+
+print("Ma tran mo rong:")
+print(Ab)
+
+print("Dang bac thang rut gon:")
+print(R)
+
+print("Cac cot tru:")
+print(pivot_columns)
+\end{lstlisting}
+
+Kết quả dạng bậc thang rút gọn là
+\[
+\begin{pmatrix}
+1&0&0&\dfrac13\\
+0&1&0&\dfrac{10}{9}\\
+0&0&1&\dfrac{13}{9}
+\end{pmatrix}.
+\]
+
+Do đó nghiệm của hệ là
+\[
+\fcolorbox{theoryframe}{sympybg}{$\displaystyle x=\frac13,\qquad y=\frac{10}{9},\qquad z=\frac{13}{9}$}
+\]
+
+\subsection{Giải hệ bằng \texttt{gauss\_jordan\_solve()}}
+
+\texttt{SymPy} cung cấp phương thức \texttt{gauss\_jordan\_solve()} để giải hệ phương trình dưới dạng ma trận.
+
+Ta sử dụng:
+\begin{lstlisting}
+solution, parameters = A.gauss_jordan_solve(B)
+
+print(solution)
+\end{lstlisting}
+
+Với hệ đang xét, kết quả là
+\[
+\begin{pmatrix}
+\dfrac13\\[4pt]
+\dfrac{10}{9}\\[4pt]
+\dfrac{13}{9}
+\end{pmatrix}.
+\]
+
+Do đó:
+\[
+x=\frac13,\qquad y=\frac{10}{9},\qquad z=\frac{13}{9}.
+\]
+
+\subsection{Giải hệ bằng \texttt{linsolve()}}
+
+Một phương pháp khác là sử dụng hàm \texttt{linsolve()}.
+
+Với ma trận hệ số $A$ và ma trận $B$, có thể viết:
+\begin{lstlisting}
+solution = sp.linsolve((A, B))
+
+print(solution)
+\end{lstlisting}
+
+Kết quả:
+\begin{lstlisting}
+{(1/3, 10/9, 13/9)}
+\end{lstlisting}
+
+Điều này tương ứng với
+\[
+(x,y,z)
+=
+\left(
+\frac13,\frac{10}{9},\frac{13}{9}
+\right).
+\]
+
+\subsection{Kiểm tra nghiệm}
+
+Sau khi tìm được nghiệm, có thể thay nghiệm vào hệ để kiểm tra.
+
+Ta khai báo:
+\begin{lstlisting}
+x, y, z = sp.symbols('x y z')
+
+solution = {
+    x: sp.Rational(1, 3),
+    y: sp.Rational(10, 9),
+    z: sp.Rational(13, 9)
+}
+
+eq1 = x + 2*y + z
+eq2 = 2*x - y + z
+eq3 = x + y - z
+
+print(eq1.subs(solution))
+print(eq2.subs(solution))
+print(eq3.subs(solution))
+\end{lstlisting}
+
+Kết quả lần lượt là
+\[
+4,\qquad 1,\qquad 0.
+\]
+
+Đây chính là các vế phải của hệ nên nghiệm đã tìm được là chính xác.
+
+\subsection{Xét số nghiệm bằng hạng ma trận}
+Để áp dụng định lý Rouché--Capelli, ta tính hạng của $A$ và $\overline A$.
+
+\begin{lstlisting}
+Ab = A.row_join(B)
+
+print("rank(A) =", A.rank())
+print("rank(Ab) =", Ab.rank())
+\end{lstlisting}
+
+Trong ví dụ trên:
+\[
+\operatorname{rank}(A)
+=
+\operatorname{rank}(\overline A)
+=3.
+\]
+
+Hệ có $3$ ẩn nên
+\[
+\operatorname{rank}(A)
+=
+\operatorname{rank}(\overline A)
+=3=n.
+\]
+
+Do đó hệ có nghiệm duy nhất.
+
+\subsection{Ví dụ hệ vô nghiệm}
+Xét hệ:
+\[
+\begin{cases}
+x+y=1,\\
+2x+2y=3.
+\end{cases}
+\]
+
+Ta có
+\[
+A=
+\begin{pmatrix}
+1&1\\
+2&2
+\end{pmatrix},
+\qquad
+B=
+\begin{pmatrix}
+1\\
+3
+\end{pmatrix}.
+\]
+
+Trong Python:
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 1],
+    [2, 2]
+])
+
+B = sp.Matrix([
+    1,
+    3
+])
+
+Ab = A.row_join(B)
+
+print("rank(A) =", A.rank())
+print("rank(Ab) =", Ab.rank())
+\end{lstlisting}
+
+Ta thu được
+\[
+\operatorname{rank}(A)=1,
+\qquad
+\operatorname{rank}(\overline A)=2.
+\]
+
+Do đó
+\[
+\operatorname{rank}(A) < \operatorname{rank}(\overline A).
+\]
+
+Theo định lý Rouché--Capelli, hệ vô nghiệm.
+
+Ta cũng có thể sử dụng:
+\begin{lstlisting}
+print(sp.linsolve((A, B)))
+\end{lstlisting}
+
+Kết quả biểu thị tập nghiệm rỗng.
+
+\subsection{Ví dụ hệ có vô số nghiệm}
+Xét hệ:
+\[
+\begin{cases}
+x+y=2,\\
+2x+2y=4.
+\end{cases}
+\]
+
+Ta có:
+\[
+A=
+\begin{pmatrix}
+1&1\\
+2&2
+\end{pmatrix},
+\qquad
+B=
+\begin{pmatrix}
+2\\
+4
+\end{pmatrix}.
+\]
+
+Trong Python:
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 1],
+    [2, 2]
+])
+
+B = sp.Matrix([
+    2,
+    4
+])
+
+Ab = A.row_join(B)
+
+print("rank(A) =", A.rank())
+print("rank(Ab) =", Ab.rank())
+
+print(sp.linsolve((A, B)))
+\end{lstlisting}
+
+Ta có
+\[
+\operatorname{rank}(A)
+=
+\operatorname{rank}(\overline A)
+=1<2.
+\]
+
+Vì số ẩn là $2$, hệ có vô số nghiệm.
+
+Kết quả nghiệm có thể viết dưới dạng
+\[
+(x,y)=(2-t,t), \qquad t\in\mathbb{R}.
+\]
+
+% =======================================================
+\section{Ví dụ tổng hợp:}
+% =======================================================
+
+Xét hệ phương trình:
+\[
+\begin{cases}
+x+2y-z=2,\\
+2x+4y-2z=4,\\
+x+y+z=3.
+\end{cases}
+\]
+
+\subsection{Bước 1. Thành lập ma trận}
+
+Ma trận hệ số:
+\[
+A=
+\begin{pmatrix}
+1&2&-1\\
+2&4&-2\\
+1&1&1
+\end{pmatrix}.
+\]
+
+Ma trận hệ số tự do:
+\[
+B=
+\begin{pmatrix}
+2\\
+4\\
+3
+\end{pmatrix}.
+\]
+
+Ma trận mở rộng:
+\[
+\overline A=
+\begin{pmatrix}
+1&2&-1&2\\
+2&4&-2&4\\
+1&1&1&3
+\end{pmatrix}.
+\]
+
+\subsection{Bước 2. Thực hiện bằng SymPy}
+
+\begin{lstlisting}
+import sympy as sp
+
+A = sp.Matrix([
+    [1, 2, -1],
+    [2, 4, -2],
+    [1, 1, 1]
+])
+
+B = sp.Matrix([
+    2,
+    4,
+    3
+])
+
+Ab = A.row_join(B)
+
+print("Ma tran mo rong:")
+print(Ab)
+
+print("Hang cua A:", A.rank())
+print("Hang cua ma tran mo rong:", Ab.rank())
+
+R, pivot_columns = Ab.rref()
+
+print("Dang bac thang rut gon:")
+print(R)
+
+print("Tap nghiem:")
+print(sp.linsolve((A, B)))
+\end{lstlisting}
+
+Ta thu được:
+\[
+\operatorname{rank}(A)
+=
+\operatorname{rank}(\overline A)
+=2<3.
+\]
+
+Do đó hệ có vô số nghiệm.
+
+Kết quả có thể biểu diễn dưới dạng:
+\[
+(x,y,z)
+=
+(4-3t,\,2t-1,\,t),
+\qquad
+t\in\mathbb{R}.
+\]
+
+\subsection{Bước 3. Kiểm tra nghiệm}
+
+Thay
+\[
+x=4-3t,\qquad y=2t-1,\qquad z=t
+\]
+vào phương trình thứ nhất:
+\[
+x+2y-z = (4-3t)+2(2t-1)-t.
+\]
+
+Suy ra
+\[
+x+2y-z = 4-3t+4t-2-t =2.
+\]
+
+Phương trình thứ hai:
+\[
+2x+4y-2z = 2(4-3t)+4(2t-1)-2t =4.
+\]
+
+Phương trình thứ ba:
+\[
+x+y+z = (4-3t)+(2t-1)+t =3.
+\]
+
+Như vậy nghiệm thu được thỏa mãn cả ba phương trình.
+
+% =======================================================
+\section{So sánh một số phương pháp trong SymPy}
+% =======================================================
+Trong quá trình giải bài toán ma trận và hệ phương trình tuyến tính, có thể sử dụng nhiều phương thức khác nhau của \texttt{SymPy}.
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{tableheader} 
+\textbf{Phương thức} & \textbf{Mục đích} & \textbf{Kết quả}\\
+\hline
+\texttt{rank()} & Tính hạng ma trận & Một số nguyên\\
+\hline
+\texttt{echelon\_form()} & Dạng bậc thang & Ma trận\\
+\hline
+\texttt{rref()} & Dạng bậc thang rút gọn & Ma trận + cột trụ\\
+\hline
+\texttt{linsolve()} & Giải hệ tuyến tính & Tập nghiệm\\
+\hline
+\texttt{gauss\_jordan\_solve()} & Giải hệ tuyến tính & Nghiệm\\
+\hline
+\end{tabular}
+\end{center}
+
+Việc lựa chọn phương thức phụ thuộc vào mục đích của bài toán. Nếu cần xác định hạng, có thể sử dụng \texttt{rank()}. Nếu muốn quan sát quá trình biến đổi ma trận, có thể sử dụng \texttt{echelon\_form()} hoặc \texttt{rref()}. Đối với bài toán giải hệ phương trình tuyến tính, \texttt{linsolve()} là một lựa chọn thuận tiện để thu được tập nghiệm.
+
+% =======================================================
+\section{Một số lưu ý khi sử dụng SymPy}
+% =======================================================
+
+Khi sử dụng \texttt{SymPy} để giải các bài toán về ma trận, cần lưu ý một số vấn đề sau.
+
+Thứ nhất, chỉ số của hàng và cột trong Python bắt đầu từ $0$. Vì vậy, hàng thứ nhất được ký hiệu bằng chỉ số $0$, hàng thứ hai bằng chỉ số $1$.
+
+Thứ hai, các phép biến đổi trên ma trận có thể làm thay đổi trực tiếp ma trận ban đầu. Do đó, nếu muốn giữ lại ma trận ban đầu để đối chiếu, nên tạo một bản sao trước khi thực hiện phép biến đổi.
+
+Ví dụ:
+
+\begin{lstlisting}
+B = A.copy()
+\end{lstlisting}
+
+Sau đó thực hiện các phép biến đổi trên $B$ thay vì $A$.
+
+Thứ ba, khi làm việc với các phân số, nên để \texttt{SymPy} xử lý dưới dạng số hữu tỉ thay vì chuyển sang số thực gần đúng. Chẳng hạn:
+
+\begin{lstlisting}
+sp.Rational(1, 3)
+\end{lstlisting}
+
+được biểu diễn chính xác dưới dạng
+
+\[
+\frac13.
+\]
+
+Điều này đặc biệt quan trọng trong các bài toán đại số tuyến tính vì kết quả chính xác thường được yêu cầu.
+
+% =======================================================
+\section{Bài tập thực hành}
+% =======================================================
+
+\begin{enumerate}
+    \item Cho ma trận
+    \[
+    A=
+    \begin{pmatrix}
+    1&2&3\\
+    2&4&6\\
+    1&1&2
+    \end{pmatrix}.
+    \]
+    Hãy sử dụng \texttt{SymPy} để:
+    \begin{enumerate}
+        \item Đưa $A$ về dạng bậc thang.
+        \item Đưa $A$ về dạng bậc thang rút gọn.
+        \item Tìm hạng của $A$.
+    \end{enumerate}
+
+    \item Cho ma trận
+    \[
+    B=
+    \begin{pmatrix}
+    1&2&0\\
+    2&4&1\\
+    3&6&1
+    \end{pmatrix}.
+    \]
+    Hãy sử dụng \texttt{SymPy} để xác định hạng của ma trận.
+
+    \item Giải hệ phương trình
+    \[
+    \begin{cases}
+    x+y+z=6,\\
+    2x-y+z=3,\\
+    x+2y-z=2.
+    \end{cases}
+    \]
+
+    \item Xét hệ
+    \[
+    \begin{cases}
+    x+y=2,\\
+    2x+2y=4.
+    \end{cases}
+    \]
+    Sử dụng hạng của ma trận để xác định số nghiệm của hệ.
+
+    \item Xét hệ
+    \[
+    \begin{cases}
+    x+y=1,\\
+    2x+2y=3.
+    \end{cases}
+    \]
+    Sử dụng \texttt{SymPy} để chứng minh hệ vô nghiệm.
+\end{enumerate}
+
+\end{document}
